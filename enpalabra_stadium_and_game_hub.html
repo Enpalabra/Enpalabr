@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENpalabra - STADIUM & GAME HUB</title>
+    <!-- Premium Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS for modern design utility -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tone.js for premium web sound synthesis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPink: '#ff0055',
+                        brandCyan: '#00ffcc',
+                        darkBg: '#060a13',
+                        cardBg: '#0f172a',
+                        accentBlue: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #ff0055;
+            --secondary: #00ffcc;
+            --dark-bg: #060a13;
+            --card-bg: rgba(15, 23, 42, 0.95);
+            --text-color: #ffffff;
+            --gray-text: #94a3b8;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient glowing background fallbacks */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 0, 85, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(0, 255, 204, 0.12) 0%, transparent 40%),
+                              url('image_a0dcc1.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px) brightness(0.4); 
+            -webkit-filter: blur(8px) brightness(0.4);
+            z-index: -1; 
+            transform: scale(1.05); 
+        }
+
+        /* Cyberpunk Grid Overlay background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neon-glow-pink:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+        }
+
+        .neon-glow-cyan:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+        }
+
+        /* Interactive sound indicator button pulsing */
+        .pulse-slow {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="cyber-grid"></div>
+
+    <header class="fixed w-full top-0 z-[1000] bg-[#060a13]/90 border-b border-white/10 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 py-4">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-brandPink to-brandCyan flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                    <i class="fas fa-gamepad text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black tracking-wider text-white uppercase group-hover:text-brandPink transition-colors">
+                        ENpalabra
+                    </h1>
+                    <span class="text-[9px] text-brandCyan tracking-widest block font-bold -mt-1 uppercase">
+                        STADIUM & GAME HUB
+                    </span>
+                </div>
+            </a>
+            
+            <nav class="hidden lg:flex items-center gap-6">
+                <a href="#hero" class="text-sm font-semibold hover:text-brandPink transition-colors active text-brandPink">መነሻ</a>
+                <a href="#about-section" class="text-sm font-semibold hover:text-brandPink transition-colors text-white">ስለ እኛ</a>
+                <a href="#live-board" class="text-sm font-semibold hover:text-brandPink transition-colors text-white">ቀጥታ ስርጭት ቦርድ</a>
+                <a href="#hub-zones" class="text-sm font-semibold hover:text-brandPink transition-colors text-white">የመዝናኛ ዞኖች</a>
+                <a href="#ai-booking" class="text-sm font-semibold hover:text-brandPink transition-colors text-white">የAI ቻት ቦት</a>
+                <a href="#calculator" class="text-sm font-semibold hover:text-brandPink transition-colors text-white">ካልኩሌተር</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <!-- Sound Toggle Indicator -->
+                <button id="audio-toggle-btn" onclick="toggleAudioSystem()" class="p-2 rounded-full border border-white/10 hover:border-brandCyan text-brandCyan transition-colors flex items-center justify-center w-10 h-10 glass-panel" title="Toggle Sound Synth">
+                    <i id="audio-icon" class="fas fa-volume-high"></i>
+                </button>
+
+                <a href="https://t.me/enpalabra" target="_blank" class="bg-gradient-to-r from-brandPink to-rose-600 hover:from-rose-600 hover:to-brandPink text-white px-4 py-2 rounded-full font-bold text-xs md:text-sm flex items-center gap-2 transition-all shadow-lg hover:shadow-brandPink/30 hover:-translate-y-0.5">
+                    <i class="fab fa-telegram text-base"></i> ቴሌግራም
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <section id="hero" class="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7 flex flex-col items-start space-y-6">
+                <div class="inline-flex items-center gap-2 bg-brandPink/10 border border-brandPink/30 px-4 py-2 rounded-full text-xs font-semibold text-brandPink shadow-sm">
+                    <i class="fas fa-crown text-amber-400 animate-bounce"></i>
+                    <span>በበቃሉ አስራት የተመሰረተ ምርጥ የመዝናኛ ማዕከል</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-white tracking-tight">
+                    PLAYSTATION & <br>
+                    <span class="bg-gradient-to-r from-brandPink via-purple-500 to-brandCyan bg-clip-text text-transparent">LIVE DSTV</span> <br>
+                    FOOTBALL STADIUM.
+                </h1>
+                
+                <p class="text-slate-300 text-sm md:text-base max-w-xl leading-relaxed">
+                    በወላይታ ሶዶ ከተማ ምርጥ በሆኑ ስክሪኖች ፕሌይስቴሽን ይጫወቱ ወይም የ DStv የቀጥታ እግር ኳስ ግጥሚያዎችን ከሌሎች አፍቃሪ ደጋፊዎች ጋር በጋራ በደመቀ ሁኔታ ይከታተሉ! መብራት መቋረጥ የለም - ጀነሬተር ዝግጁ ነው።
+                </p>
+                
+                <div class="flex flex-wrap gap-4 w-full sm:w-auto">
+                    <a href="#ai-booking" onclick="playBeep(440, 'sine')" class="w-full sm:w-auto px-6 py-4 bg-brandPink hover:bg-rose-600 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-all hover:scale-[1.03] shadow-lg shadow-brandPink/20 hover:shadow-brandPink/40">
+                        <i class="fas fa-comments-alt"></i> ከAI ረዳት ጋር ያውሩ
+                    </a>
+                    <a href="#hub-zones" onclick="playBeep(330, 'sine')" class="w-full sm:w-auto px-6 py-4 bg-slate-800/80 hover:bg-slate-700 text-white font-bold rounded-xl border border-white/10 hover:border-brandCyan flex items-center justify-center gap-3 transition-all">
+                        <i class="fas fa-tags text-brandCyan"></i> የዋጋ ዝርዝር እይ
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stadium Promotional Seat Widget -->
+            <div class="lg:col-span-5 w-full">
+                <div class="glass-panel rounded-3xl p-6 md:p-8 border border-brandCyan/20 text-center relative overflow-hidden group hover:border-brandCyan/40 transition-all duration-300">
+                    <div class="absolute top-0 right-0 bg-brandCyan/10 border-b border-l border-brandCyan/20 text-brandCyan text-[10px] font-black px-4 py-1.5 uppercase rounded-bl-xl tracking-wider">
+                        DSTV Stadium View
+                    </div>
+                    
+                    <span class="text-xs font-bold text-brandCyan tracking-widest block mb-1">LIVE FOOTBALL EXPERIENCE</span>
+                    <h3 class="text-3xl font-black text-white leading-tight mb-4 uppercase">
+                        FEEL THE <br><span class="text-brandPink bg-gradient-to-r from-brandPink to-purple-400 bg-clip-text text-transparent">STADIUM VIBE!</span>
+                    </h3>
+                    
+                    <p class="text-slate-300 text-xs md:text-sm mb-6 leading-relaxed">
+                        ታላላቅ የሊግ ጨዋታዎችን በቀጥታ በDStv በትልልቅ ስክሪኖች፣ በደመቀ ድምፅና በምቹ ወንበሮች ይከታተሉ!
+                    </p>
+                    
+                    <div class="w-36 h-36 rounded-full border-4 border-dashed border-brandCyan/50 mx-auto flex flex-col justify-center items-center bg-brandCyan/5 mb-6 hover:scale-105 transition-transform duration-300 shadow-inner">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">በጨዋታ</span>
+                        <h4 class="text-3xl font-black text-brandCyan">15 BIRR</h4>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">ONLY</span>
+                    </div>
+
+                    <button onclick="bookLoungeSeat('DStv Grand Theater')" class="w-full py-3 rounded-xl bg-gradient-to-r from-brandCyan/10 to-brandCyan/20 hover:from-brandCyan hover:to-teal-400 border border-brandCyan/40 hover:text-darkBg text-brandCyan font-bold text-sm transition-all shadow-md">
+                        <i class="fas fa-ticket text-xs mr-2"></i> አሁን ወንበር ያስይዙ (15 Birr)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Operating Banner -->
+        <div class="bg-gradient-to-r from-darkBg via-slate-900 to-darkBg border-y border-white/5 py-4 px-4">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs md:text-sm">
+                <div class="flex items-center gap-3">
+                    <span class="relative flex h-3.5 w-3.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brandCyan opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-brandCyan"></span>
+                    </span>
+                    <p class="font-medium text-slate-200">
+                        የዛሬ ሁኔታ (Lounge Status): <span class="text-brandCyan font-bold">ክፍት ነው (OPEN)</span> - ሁሉም ጌሞች እና መቀመጫዎች ዝግጁ ናቸው!
+                    </p>
+                </div>
+                <div class="flex items-center gap-4 text-slate-400">
+                    <span><i class="fas fa-bolt text-brandPink mr-1.5"></i> 100% የጀነሬተር ዋስትና</span>
+                    <span class="hidden md:inline">|</span>
+                    <span><i class="fas fa-shield-check text-brandCyan mr-1.5"></i> ሰላማዊ ማረፊያ</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW SECTION: Live Stadium Board & Real-Time Booking State -->
+        <section id="live-board" class="max-w-7xl mx-auto px-4 md:px-8 py-16">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold text-brandPink tracking-widest block uppercase mb-2">LIVE LOUNGE OVERVIEW</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white">የዛሬ ቀጥታ ስርጭትና <span class="text-brandCyan">የኮንሶል ሰሌዳ</span></h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto mt-2">በማዕከላችን እየተካሄዱ ያሉ ታላላቅ ጨዋታዎች እና ነፃ ኮንሶሎች የቀጥታ ሁኔታ</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Live Matches Block -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                <i class="fas fa-tv text-brandPink"></i> የዛሬ ትልልቅ የDStv ጨዋታዎች
+                            </h3>
+                            <span class="bg-brandPink/15 text-brandPink text-[10px] px-2 py-0.5 rounded font-black">ቀጥታ</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Match 1 -->
+                            <div class="bg-darkBg/60 p-4 rounded-xl border border-white/5 hover:border-brandCyan/20 transition-all">
+                                <div class="flex justify-between text-[11px] text-slate-400 mb-2">
+                                    <span>የእንግሊዝ ፕሪሚየር ሊግ</span>
+                                    <span class="text-brandPink font-bold">ዛሬ ማታ 4:00 PM</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2">
+                                    <span class="font-bold text-sm text-slate-100">Chelsea 🔵</span>
+                                    <span class="text-xs px-2 py-1 bg-slate-800 rounded font-black text-white">VS</span>
+                                    <span class="font-bold text-sm text-slate-100">🔴 Arsenal</span>
+                                </div>
+                                <div class="mt-2 flex justify-between items-center text-xs">
+                                    <span class="text-slate-400"><i class="fas fa-users mr-1"></i> ወንበር ተይዟል: 85%</span>
+                                    <button onclick="bookLoungeSeat('Chelsea vs Arsenal')" class="text-brandCyan font-bold hover:underline text-[11px]">ቦታ አስይዝ &rarr;</button>
+                                </div>
+                            </div>
+
+                            <!-- Match 2 -->
+                            <div class="bg-darkBg/60 p-4 rounded-xl border border-white/5 hover:border-brandPink/20 transition-all">
+                                <div class="flex justify-between text-[11px] text-slate-400 mb-2">
+                                    <span>የአውሮፓ ሻምፒዮንስ ሊግ</span>
+                                    <span class="text-brandCyan font-bold">ነገ ማታ 4:00 PM</span>
+                                </div>
+                                <div class="flex justify-between items-center py-2">
+                                    <span class="font-bold text-sm text-slate-100">Real Madrid ⚪</span>
+                                    <span class="text-xs px-2 py-1 bg-slate-800 rounded font-black text-white">VS</span>
+                                    <span class="font-bold text-sm text-slate-100">🔴 Bayern</span>
+                                </div>
+                                <div class="mt-2 flex justify-between items-center text-xs">
+                                    <span class="text-slate-400"><i class="fas fa-users mr-1"></i> ወንበር ተይዟል: 40%</span>
+                                    <button onclick="bookLoungeSeat('Real Madrid vs Bayern')" class="text-brandCyan font-bold hover:underline text-[11px]">ቦታ አስይዝ &rarr;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-6 italic">* የቀጥታ ግጥሚያዎችን በትልቅ ስክሪን በምቾት ለመመልከት ቀድመው ወንበር ያስይዙ።</p>
+                </div>
+
+                <!-- Live PS5 Station Availability Block -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                <i class="fas fa-gamepad text-brandCyan"></i> የPS5 VIP ጌም ስቴሽኖች
+                            </h3>
+                            <span class="bg-brandCyan/15 text-brandCyan text-[10px] px-2 py-0.5 rounded font-black">ቀጥታ መረጃ</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Console 1 -->
+                            <div class="flex items-center justify-between p-3 bg-darkBg/60 rounded-xl border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-brandPink font-extrabold text-sm">C1</div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-100">ስቴሽን 1 (VIP Couch)</h4>
+                                        <p class="text-[11px] text-slate-400">ጨዋታ፡ FC 26 (FIFA) - Multi-Player</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded bg-rose-500/10 text-rose-500 font-extrabold flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span> ተይዟል
+                                </span>
+                            </div>
+
+                            <!-- Console 2 -->
+                            <div class="flex items-center justify-between p-3 bg-darkBg/60 rounded-xl border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-brandCyan font-extrabold text-sm">C2</div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-100">ስቴሽን 2 (VIP Couch)</h4>
+                                        <p class="text-[11px] text-slate-400">ጨዋታ፡ GTA V Arcade</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 font-extrabold flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ክፍት ነው
+                                </span>
+                            </div>
+
+                            <!-- Console 3 -->
+                            <div class="flex items-center justify-between p-3 bg-darkBg/60 rounded-xl border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center text-brandCyan font-extrabold text-sm">C3</div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-100">ስቴሽን 3 (Standard Dual)</h4>
+                                        <p class="text-[11px] text-slate-400">ጨዋታ: Mortal Kombat 1</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 font-extrabold flex items-center gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ክፍት ነው
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <button onclick="scrollToAISection('ps')" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 border border-white/5">
+                            <i class="fas fa-desktop text-brandCyan"></i> የPS5 ጌም ስፍራ አስቀድመው ያስይዙ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Local PS5 Tournaments Leaderboard -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                <i class="fas fa-trophy text-amber-400"></i> የክለባችን የውድድር ሻምፒዮኖች
+                            </h3>
+                            <span class="bg-amber-500/15 text-amber-400 text-[10px] px-2 py-0.5 rounded font-black">እድገት</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-darkBg/40 rounded-xl">
+                                <span class="text-xs font-bold text-slate-300">1. ናሆም ብርሃኑ (Nahom B.)</span>
+                                <span class="text-xs font-black text-brandCyan">420 Pts</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-darkBg/40 rounded-xl">
+                                <span class="text-xs font-bold text-slate-300">2. አማኑኤል ወንድሙ (Aman W.)</span>
+                                <span class="text-xs font-black text-brandCyan">395 Pts</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-darkBg/40 rounded-xl">
+                                <span class="text-xs font-bold text-slate-300">3. ቤተልሔም ግርማ (Betelhem G.)</span>
+                                <span class="text-xs font-black text-brandCyan">380 Pts</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 border-t border-white/5 pt-4">
+                        <div class="text-center">
+                            <p class="text-xs text-slate-300 font-semibold mb-2">የሚቀጥለው ዙር የ PS5 FC 26 ውድድር ጅማሮ፡</p>
+                            <span class="text-xs px-3 py-1.5 bg-brandPink text-white font-extrabold rounded-lg inline-block pulse-slow">
+                                ሐምሌ 15 ቀን - ዛሬውኑ ይመዝገቡ!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 py-16" id="about-section">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-xs font-extrabold text-brandPink tracking-widest block uppercase">THE STORY OF ENPALABRA</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+                        <span>ስለ ማዕከላችን</span> ታሪክ እና ራዕይ
+                    </h2>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                        ENpalabra የተመሰረተው በወላይታ ሶዶ ከተማ ለሚገኙ ወጣቶች እና ለስፖርት አፍቃሪዎች ዘመናዊ፣ እጅግ ማራኪ እና ምቹ የመዝናኛ መድረክን ለመፍጠር ነው። ተጫዋቾች የምንጊዜም ተወዳጅ የፒኤስ5 ጌሞቻቸውን በቪአይፒ ደረጃ እንዲጫወቱ እንዲሁም የእግር ኳስ አፍቃሪዎች በደመቀ ድባብ ጨዋታዎችን እንዲከታተሉ አስተማማኝ መብራትና ፈጣን አገልግሎት አዘጋጅተናል።
+                    </p>
+                    <div class="p-4 rounded-2xl bg-slate-900/60 border border-white/5 flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-brandCyan/10 text-brandCyan flex items-center justify-center shrink-0">
+                            <i class="fas fa-quote-left text-xl"></i>
+                        </div>
+                        <p class="text-xs text-slate-300 italic leading-relaxed">
+                            "ታማኝና ጥራት ያለው መዝናኛን ለወጣቱ ማድረስ የ ENpalabra ዋና ዓላማ ነው። በወላይታ ሶዶ ከተማ ውስጥ እግር ኳስንና ጌሞችን በአዲስ ደረጃ ማስተናገድ እንቀጥላለን።" <br>
+                            <span class="font-bold text-brandCyan not-italic block mt-1 text-[11px]">— በቃሉ አስራት (መሥራች)</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-brandPink space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-brandPink/10 text-brandPink flex items-center justify-center">
+                            <i class="fas fa-bolt text-xl animate-pulse"></i>
+                        </div>
+                        <h5 class="text-base font-bold text-white">100% BACKUP POWER</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">መብራት መቋረጥ የለም! አስተማማኝ አውቶማቲክ ጀነሬተር በማዕከላችን ሁሌም ዝግጁ ነው።</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-brandCyan space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-brandCyan/10 text-brandCyan flex items-center justify-center">
+                            <i class="fas fa-couch text-xl"></i>
+                        </div>
+                        <h5 class="text-base font-bold text-white">COZY SEATING</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">እጅግ ዘመናዊና ምቹ ሶፋዎች ለሙሉ 90 ደቂቃ ጨዋታ ያለመታከት ያዝናኑዎታል።</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-brandCyan space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-brandCyan/10 text-brandCyan flex items-center justify-center">
+                            <i class="fas fa-tv text-xl"></i>
+                        </div>
+                        <h5 class="text-base font-bold text-white">4K ULTRA HIGH GRAPHICS</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">በፒኤስ5 በ4ኬ ጥራትና እጅግ ፈጣን ምላሽ በሚሰጡ ታላላቅ የቲቪ ስክሪኖች ይጫወቱ።</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-brandPink space-y-3">
+                        <div class="w-12 h-12 rounded-xl bg-brandPink/10 text-brandPink flex items-center justify-center">
+                            <i class="fas fa-mug-hot text-xl"></i>
+                        </div>
+                        <h5 class="text-base font-bold text-white">BEVERAGE & SNACKS</h5>
+                        <p class="text-xs text-slate-400 leading-relaxed">እየተጫወቱ ወይም እግር ኳስ እያዩ የሚጠጡትን ቀዝቃዛና ትኩስ መጠጦች እናዘጋጃለን።</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hub Zones Section -->
+        <section id="hub-zones" class="bg-[#090d16]/95 border-y border-white/5 py-16">
+            <div class="max-w-7xl mx-auto px-4 md:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-xs font-extrabold text-brandPink tracking-widest block uppercase mb-2">PRICING & ROOMS</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-white">የእኛ የጌሚንግና <span class="text-brandPink">የመዝናኛ ዞኖች</span></h2>
+                    <p class="text-slate-400 text-sm max-w-xl mx-auto mt-2">CORE MULTI-CATEGORY HUBS</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Zone 1: DStv Live Football -->
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 flex flex-col justify-between group hover:border-brandPink/30 transition-all duration-300">
+                        <div class="p-6 md:p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] bg-brandPink/15 text-brandPink font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">LIVE SPORT</span>
+                                <i class="fas fa-tv text-slate-400 group-hover:text-brandPink transition-colors"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-brandPink transition-colors">DStv Live Football</h3>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                                የእንግሊዝ ፕሪሚየር ሊግ እና ሻምፒዮንስ ሊግ ጨዋታዎችን ከሌሎች ደጋፊዎች ጋር በጋራ በደመቀ ሁኔታ ይከታተሉ! በጨዋታ 15 ብር ብቻ።
+                            </p>
+                        </div>
+                        <div class="p-6 bg-slate-900/50 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-slate-400">ዋጋ (Standard Ticket)</span>
+                            <div class="bg-brandPink/10 text-brandPink font-black px-4 py-2 rounded-xl text-xs md:text-sm">
+                                15 BIRR / FULL MATCH
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zone 2: EA Sports FC -->
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 flex flex-col justify-between group hover:border-brandCyan/30 transition-all duration-300">
+                        <div class="p-6 md:p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] bg-brandCyan/15 text-brandCyan font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">NEXT-GEN SOCCER</span>
+                                <i class="fas fa-gamepad text-slate-400 group-hover:text-brandCyan transition-colors"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-brandCyan transition-colors">EA Sports FC (FIFA)</h3>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                                የእግር ኳስን ጥበብ የመጨረሻው ትውልድ በሆነው አስደናቂ ግራፊክስ እና ምቹ በሆኑ የቪአይፒ ኮንሶሎች በጋራ ይወዳደሩ።
+                            </p>
+                        </div>
+                        <div class="p-6 bg-slate-900/50 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-slate-400">ዋጋ (Consoles)</span>
+                            <div class="bg-brandCyan/10 text-brandCyan font-black px-4 py-2 rounded-xl text-xs md:text-sm">
+                                10 BIRR / FULL GAME
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zone 3: GTA V Sandbox -->
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 flex flex-col justify-between group hover:border-brandPink/30 transition-all duration-300">
+                        <div class="p-6 md:p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] bg-brandPink/15 text-brandPink font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">SANDBOX ARCADE</span>
+                                <i class="fas fa-car-burst text-slate-400 group-hover:text-brandPink transition-colors"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-brandPink transition-colors">GTA V Arcade</h3>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                                የሎስ ሳንቶስን አሸናፊነት ለመጎናጸፍ የሚደረጉ አስደናቂ ጀብዱዎችን እጅግ ፈጣን በሆነው የPS5 4K ስክሪን ይለማመዱ።
+                            </p>
+                        </div>
+                        <div class="p-6 bg-slate-900/50 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-slate-400">ዋጋ (Time Play)</span>
+                            <div class="bg-brandPink/10 text-brandPink font-black px-4 py-2 rounded-xl text-xs md:text-sm">
+                                10 BIRR / 10 MINUTES
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREMIUM DUAL CHAT ENGINE ZONES -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 py-16" id="ai-booking">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold text-brandCyan tracking-widest block uppercase mb-2">MINI CHAT INTELLIGENCE v2.6</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white">የእኛ የውይይት <span class="text-brandCyan">Mini AI</span> መድረክ</h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto mt-2">ስለ ዋጋ፣ ጨዋታዎች ይጠይቁ ወይም በቀጥታ ውይይት ወንበር ያስይዙ!</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 1. TOURNAMENT & INFO ASSISTANT (Chatbot Style) -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/5 flex flex-col justify-between h-[580px] relative overflow-hidden group">
+                    <!-- Tech Header overlay -->
+                    <div class="absolute top-0 left-0 right-0 bg-brandPink/10 px-6 py-2 border-b border-white/5 flex items-center justify-between text-[11px] font-mono tracking-widest text-brandPink">
+                        <span>🤖 TOURNAMENT BOT v2.6</span>
+                        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandPink animate-ping"></span> ONLINE</span>
+                    </div>
+
+                    <!-- Chat Container -->
+                    <div class="flex-1 overflow-y-auto pr-2 mt-8 mb-4 space-y-4 pt-4" id="ps-chat-box">
+                        <div class="max-w-[85%] bg-slate-800 text-slate-200 text-xs md:text-sm p-3.5 rounded-2xl rounded-tl-none border-l-4 border-l-brandPink">
+                            ሰላም! እኔ የ ENpalabra ዘመናዊ AI ረዳት ነኝ። ስለ ውድድሩ መርሃ-ግብር ማወቅ፣ ስለ ድርጅታችን ታሪክ መጠየቅ ወይም ስም፣ ስልክ ቁጥር እና ኢሜይልዎን በመስጠት ለውድድሩ መመዝገብ ይችላሉ። በምን ልርዳዎት?
+                        </div>
+                    </div>
+
+                    <!-- Suggested Chips for Quick Interactivity -->
+                    <div class="mb-3 flex flex-wrap gap-2">
+                        <button onclick="handleSuggestedChip('ps', 'ስለ ውድድር መቼ ነው?')" class="text-[10px] md:text-xs bg-darkBg border border-white/10 hover:border-brandPink text-slate-300 hover:text-white px-2.5 py-1 rounded-full transition-all">
+                            🏆 የውድድር መቼ ነው?
+                        </button>
+                        <button onclick="handleSuggestedChip('ps', 'የፒኤስ5 ዋጋ ስንት ነው?')" class="text-[10px] md:text-xs bg-darkBg border border-white/10 hover:border-brandPink text-slate-300 hover:text-white px-2.5 py-1 rounded-full transition-all">
+                            🎮 የፒኤስ5 ዋጋ ስንት ነው?
+                        </button>
+                        <button onclick="handleSuggestedChip('ps', 'መመዝገብ እፈልጋለሁ')" class="text-[10px] md:text-xs bg-brandPink/15 border border-brandPink/30 text-brandPink hover:bg-brandPink hover:text-white px-2.5 py-1 rounded-full transition-all">
+                            📝 መመዝገብ እፈልጋለሁ
+                        </button>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="flex gap-2">
+                        <input type="text" id="ps-chat-input" placeholder="መልእክትዎን እዚህ ይጻፉ..." onkeypress="handleChatKey(event, 'ps')" class="flex-1 bg-darkBg border border-white/10 focus:border-brandPink rounded-xl px-4 py-3.5 text-xs md:text-sm text-white placeholder-slate-500 focus:outline-none transition-colors">
+                        <button onclick="sendChatMessage('ps')" class="bg-brandPink hover:bg-rose-600 text-white font-bold px-5 rounded-xl flex items-center justify-center transition-colors">
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. DSTV AUDITORIUM & PRICING ASSISTANT (Chatbot Style) -->
+                <div class="glass-panel rounded-2xl p-6 border border-white/5 flex flex-col justify-between h-[580px] relative overflow-hidden group">
+                    <!-- Tech Header overlay -->
+                    <div class="absolute top-0 left-0 right-0 bg-brandCyan/10 px-6 py-2 border-b border-white/5 flex items-center justify-between text-[11px] font-mono tracking-widest text-brandCyan">
+                        <span>🤖 DSTV STADIUM BOT v2.6</span>
+                        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandCyan animate-ping"></span> ONLINE</span>
+                    </div>
+
+                    <!-- Chat Container -->
+                    <div class="flex-1 overflow-y-auto pr-2 mt-8 mb-4 space-y-4 pt-4" id="dstv-chat-box">
+                        <div class="max-w-[85%] bg-slate-800 text-slate-200 text-xs md:text-sm p-3.5 rounded-2xl rounded-tl-none border-l-4 border-l-brandCyan">
+                            እንቅን ደህና መጡ! እኔ የ DStv አዳራሽ እና የዋጋ መረጃ ረዳት ነኝ። ስለ መደበኛ መግቢያ ዋጋዎች፣ ስለ ትልልቅ ጨዋታዎች መርሃ-ግብር መጠየቅ ወይም ስምዎን፣ ስልክዎን እና ኢሜይልዎን በመስጠት ለአስደናቂዎቹ ታላላቅ ጨዋታዎች የቪአይፒ ወንበር ማስያዝ ይችላሉ። ምን ማወቅ ይፈልጋሉ?
+                        </div>
+                    </div>
+
+                    <!-- Suggested Chips for Quick Interactivity -->
+                    <div class="mb-3 flex flex-wrap gap-2">
+                        <button onclick="handleSuggestedChip('dstv', 'ቀጣይ ጨዋታዎች መቼ ናቸው?')" class="text-[10px] md:text-xs bg-darkBg border border-white/10 hover:border-brandCyan text-slate-300 hover:text-white px-2.5 py-1 rounded-full transition-all">
+                            ⚽ ቀጣይ ጨዋታዎች?
+                        </button>
+                        <button onclick="handleSuggestedChip('dstv', 'የመግቢያ ዋጋ ስንት ነው?')" class="text-[10px] md:text-xs bg-darkBg border border-white/10 hover:border-brandCyan text-slate-300 hover:text-white px-2.5 py-1 rounded-full transition-all">
+                            💰 የመግቢያ ዋጋ?
+                        </button>
+                        <button onclick="handleSuggestedChip('dstv', 'ወንበር ማስያዝ እፈልጋለሁ')" class="text-[10px] md:text-xs bg-brandCyan/15 border border-brandCyan/30 text-brandCyan hover:bg-brandCyan hover:text-darkBg px-2.5 py-1 rounded-full transition-all font-semibold">
+                            🪑 ወንበር ማስያዝ!
+                        </button>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="flex gap-2">
+                        <input type="text" id="dstv-chat-input" placeholder="መልእክትዎን እዚህ ይጻፉ..." onkeypress="handleChatKey(event, 'dstv')" class="flex-1 bg-darkBg border border-white/10 focus:border-brandCyan rounded-xl px-4 py-3.5 text-xs md:text-sm text-white placeholder-slate-500 focus:outline-none transition-colors">
+                        <button onclick="sendChatMessage('dstv')" class="bg-brandCyan hover:bg-teal-400 text-darkBg font-bold px-5 rounded-xl flex items-center justify-center transition-colors">
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Calculator Section -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 py-16" id="calculator">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold text-brandPink tracking-widest block uppercase mb-2">DYNAMIC LIVE ESTIMATOR</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white">የዋጋ ማስያዣ <span class="text-brandPink">ካልኩሌተር</span></h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto mt-2">ደቂቃውን፣ የሰውን ብዛት እና ጨዋታዎችን በማስገባት ሂሳብዎን አስቀድመው ያውቁ</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Inputs Glass Panel -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-6 md:p-8 border border-white/5 space-y-6">
+                    <!-- Range 1: Persons -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs md:text-sm font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fas fa-users text-brandPink"></i> የሰዎች ብዛት (Persons Attending)
+                            </label>
+                            <span class="text-lg font-black text-brandPink" id="val-persons">1</span>
+                        </div>
+                        <input type="range" min="1" max="10" value="1" class="w-full accent-brandPink bg-darkBg h-2 rounded-lg cursor-pointer" id="slide-persons" oninput="calculateTotal()">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                            <span>1 ሰው</span>
+                            <span>5 ሰዎች</span>
+                            <span>10 ሰዎች</span>
+                        </div>
+                    </div>
+
+                    <!-- Range 2: Games/Matches -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs md:text-sm font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fas fa-tv text-brandCyan"></i> የDStv እግር ኳስ ጨዋታዎች ብዛት (Matches Watched)
+                            </label>
+                            <span class="text-lg font-black text-brandCyan" id="val-games">0</span>
+                        </div>
+                        <input type="range" min="0" max="5" value="0" class="w-full accent-brandCyan bg-darkBg h-2 rounded-lg cursor-pointer" id="slide-games" oninput="calculateTotal()">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                            <span>0 ጨዋታ</span>
+                            <span>2 ጨዋታዎች</span>
+                            <span>5 ጨዋታዎች</span>
+                        </div>
+                    </div>
+
+                    <!-- Range 3: Arcade Mins -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs md:text-sm font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fas fa-hourglass-half text-brandPink"></i> የPS5 ጨዋታ ደቂቃዎች (Arcade Duration)
+                            </label>
+                            <span class="text-lg font-black text-brandPink" id="val-mins">0</span>
+                        </div>
+                        <input type="range" min="0" max="180" step="10" value="0" class="w-full accent-brandPink bg-darkBg h-2 rounded-lg cursor-pointer" id="slide-mins" oninput="calculateTotal()">
+                        <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                            <span>0 ደቂቃ</span>
+                            <span>60 ደቂቃ (1 ሰዓት)</span>
+                            <span>180 ደቂቃ (3 ሰዓት)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Panel -->
+                <div class="lg:col-span-5 glass-panel rounded-3xl p-6 md:p-8 border-2 border-dashed border-brandCyan/30 flex flex-col justify-between text-center relative overflow-hidden bg-brandCyan/5">
+                    <div>
+                        <span class="text-xs font-bold text-brandCyan tracking-widest block uppercase mb-4">ESTIMATED TOTAL STATEMENT</span>
+                        <h5 class="text-slate-400 text-xs md:text-sm uppercase font-semibold">የተሰላ ጠቅላላ ግምታዊ ሂሳብ</h5>
+                        
+                        <!-- Premium big price counter -->
+                        <div class="text-5xl md:text-6xl font-black text-white my-8 flex items-center justify-center gap-2" id="total-price-display">
+                            0 <span class="text-base text-slate-400 block font-normal tracking-wide">BIRR</span>
+                        </div>
+
+                        <!-- Real-time calculation breakdown itemization -->
+                        <div class="text-left bg-darkBg/60 p-4 rounded-2xl border border-white/5 space-y-2 text-xs text-slate-300">
+                            <div class="flex justify-between">
+                                <span>👥 የሰዎች ጠቅላላ ብዛት:</span>
+                                <span class="font-bold text-slate-100" id="breakdown-persons">1</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>⚽ የDStv እግር ኳስ ወጪ (15 Birr/Match):</span>
+                                <span class="font-bold text-brandCyan" id="breakdown-dstv">0 Birr</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>🎮 የPS5 አርኬድ ወጪ (10 Birr/10 Mins):</span>
+                                <span class="font-bold text-brandPink" id="breakdown-arcade">0 Birr</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <button onclick="bookCalculatedQuote()" class="w-full py-4 bg-gradient-to-r from-brandPink to-rose-600 hover:from-rose-600 hover:to-brandPink text-white font-black rounded-xl text-sm transition-all hover:shadow-lg hover:shadow-brandPink/30 flex items-center justify-center gap-2">
+                            <i class="fas fa-calendar-check text-xs"></i> ይህንን ዋጋ ተጠቅመው ቦታ ያስይዙ
+                        </button>
+                        <p class="text-[10px] text-slate-500">Calculated according to standard live ENpalabra premium rates.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Address & Lounge Hours Info Section -->
+    <section class="bg-[#090d16]/95 border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-8">
+                    <h3 class="text-2xl md:text-3xl font-extrabold text-white">ADDRESS & LOUNGE HOURS</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 hover:border-brandCyan flex items-center justify-center text-brandCyan text-lg shrink-0">
+                                <i class="fas fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-1">Location Base</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">Near Abba Pascal School Area, Wolaita Sodo, Ethiopia</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 hover:border-brandPink flex items-center justify-center text-brandPink text-lg shrink-0">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-1">Lounge Hotline</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed font-mono">0990965020</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 sm:col-span-2">
+                            <div class="w-12 h-12 rounded-full bg-slate-900 border border-white/10 hover:border-brandCyan flex items-center justify-center text-brandCyan text-lg shrink-0">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-1">Lounge Operational Hours</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed font-semibold">EVERYDAY (ከሰኞ እስከ እሁድ): 8:00 AM - 11:00 PM (ከሰዓት 2:00 እስከ ምሽት 5:00 ሰዓት)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-brandPink/10 text-brandPink flex items-center justify-center mx-auto shadow-inner">
+                            <i class="fas fa-shield-halved text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white uppercase tracking-wider">WOLAITA SODO MAIN STATION</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            ENpalabra አስተማማኝ እና ፈጣን የፕሌይስቴሽን አገልግሎት መገኛ ማዕከል ነው። አስተማማኝ መብራት፣ ምቹ መዝናኛ እና ፈጣን አገልግሎትን ሁልጊዜም ለርስዎ እናቀርባለን።
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darkBg text-center py-8 px-4 border-t border-white/5 text-[11px] text-slate-500 tracking-wider font-semibold">
+        © 2026 ENPALABRA INTERACTIVE STADIUM & PLAYSTATION ZONE. ARCHITECTED BY BEKALU ASRAT. ALL RIGHTS RESERVED.
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT CHAT INTELLIGENCE ENGINE & FUNCTIONALITIES -->
+    <script>
+        // Separate state management for both chat interfaces
+        let chatStates = {
+            ps: { step: 0, name: '', phone: '', email: '' },
+            dstv: { step: 0, name: '', phone: '', email: '' }
+        };
+
+        // Custom Tone.js Audio Synth setup for Premium Sound Effects
+        let soundEnabled = true;
+        let synth = null;
+
+        function initSynth() {
+            if (!synth) {
+                synth = new Tone.Synth().toDestination();
+                synth.volume.value = -12; // Moderate comfortable volume
+            }
+        }
+
+        function playBeep(frequency = 440, type = "sine", duration = "8n") {
+            if (!soundEnabled) return;
+            try {
+                initSynth();
+                synth.oscillator.type = type;
+                synth.triggerAttackRelease(frequency, duration);
+            } catch (err) {
+                console.log("Audio contexts need interaction first");
+            }
+        }
+
+        // Toggle sound status
+        function toggleAudioSystem() {
+            soundEnabled = !soundEnabled;
+            const btnIcon = document.getElementById('audio-icon');
+            if (soundEnabled) {
+                btnIcon.className = 'fas fa-volume-high';
+                playBeep(600, "square", "16n");
+            } else {
+                btnIcon.className = 'fas fa-volume-xmark text-slate-500';
+            }
+        }
+
+        // Handle Suggested Chips click inside Chat
+        function handleSuggestedChip(botType, text) {
+            playBeep(450, "triangle", "16n");
+            const inputEl = document.getElementById(`${botType}-chat-input`);
+            inputEl.value = text;
+            sendChatMessage(botType);
+        }
+
+        function handleChatKey(event, botType) {
+            if (event.key === 'Enter') {
+                sendChatMessage(botType);
+            }
+        }
+
+        function sendChatMessage(botType) {
+            const inputEl = document.getElementById(`${botType}-chat-input`);
+            const chatBox = document.getElementById(`${botType}-chat-box`);
+            const text = inputEl.value.trim();
+
+            if (!text) return;
+
+            // User audio indicator
+            playBeep(520, "sine", "16n");
+
+            // 1. Append User Message
+            appendMessage(chatBox, text, 'user');
+            inputEl.value = '';
+
+            // Scroll helper
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 2. Process Bot Intelligent Response after simulated delay
+            setTimeout(() => {
+                let response = getBotResponse(botType, text, chatStates[botType]);
+                appendMessage(chatBox, response, 'bot');
+                playBeep(580, "triangle", "8n");
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
+
+        function appendMessage(container, text, sender) {
+            const isBot = sender === 'bot';
+            const alignment = isBot ? 'justify-start' : 'justify-end';
+            const innerBg = isBot 
+                ? 'bg-slate-800 text-slate-200 border-l-4 border-l-brandPink rounded-tl-none' 
+                : 'bg-brandPink text-white rounded-tr-none';
+
+            const msgHtml = `
+                <div class="flex ${alignment} w-full">
+                    <div class="max-w-[85%] text-xs md:text-sm p-3.5 rounded-2xl ${innerBg} shadow-sm leading-relaxed">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', msgHtml);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function getBotResponse(botType, text, state) {
+            const textLower = text.toLowerCase();
+
+            // Check if user explicitly wants to register/book
+            if ((textLower.includes('register') || textLower.includes('መመዝገብ') || textLower.includes('ቦታ') || textLower.includes('ይመዝግቡኝ') || textLower.includes('ማስያዝ') || textLower.includes('ወንበር')) && state.step === 0) {
+                state.step = 1;
+                return "በጣም ጥሩ! ቦታ ለመመዝገብ/ለማስያዝ መጀመሪያ <b>ሙሉ ስምዎን</b> ይንገሩኝ?";
+            }
+
+            // Data collection flow states
+            if (state.step === 1) {
+                state.name = text;
+                state.step = 2;
+                return `አመሰግናለሁ ${state.name}! በመቀጠል እባክዎ <b>የስልክ ቁጥርዎን</b> ያስገቡ?`;
+            }
+            if (state.step === 2) {
+                state.phone = text;
+                state.step = 3;
+                return "በመጨረሻም <b>የኢሜይል (Gmail) አድራሻዎን</b> ይንገሩኝ?";
+            }
+            if (state.step === 3) {
+                state.email = text;
+                state.step = 0; // Reset state loop
+                return `🎉 ግሩም ነው! ምዝገባዎ ሙሉ በሙሉ ተጠናቋል።<br><br><b>የተመዘገበው መረጃ፡</b><br>👤 ስም: ${state.name}<br>📞 ስልክ: ${state.phone}<br>📧 ኢሜይል: ${state.email}<br><br>የENpalabra ማስተናገጃ ማዕከል በቅርቡ በስልክዎ ያነጋግርዎታል!`;
+            }
+
+            // General Knowledge & Pricing Responses about ENpalabra
+            if (textLower.includes('ዋጋ') || textLower.includes('price') || textLower.includes('ስንት')) {
+                return "<b>የENpalabra የአገልግሎት ዋጋዎች ዝርዝር፡</b><br>⚽ DStv የቀጥታ እግር ኳስ ጨዋታ በ90 ደቂቃ፡ 15 ብር ብቻ!<br>🎮 EA Sports FC (FIFA) በሙሉ ጨዋታ፡ 10 ብር!<br>🚗 GTA V Arcade ለ10 ደቂቃ፡ 10 ብር ብቻ!<br><br>ለመመዝገብ 'መመዝገብ እፈልጋለሁ' ብለው ይጻፉልኝ።";
+            }
+            
+            if (textLower.includes('ድርጅት') || textLower.includes('company') || textLower.includes('ስለ እናንተ') || textLower.includes('ታሪክ') || textLower.includes('ማዕከል')) {
+                return "<b>ስለ ENpalabra ማዕከል፡</b><br>ማዕከላችን በወላይታ ሶዶ ከተማ በአባ ፓስካል ትምህርት ቤት አቅራቢያ የሚገኝ እጅግ ዘመናዊ የስፖርትና የመዝናኛ ማዕከል ነው። በበቃሉ አስራት የተመሰረተ ሲሆን፣ አስተማማኝ የ24 ሰዓት የጀነሬተር መብራት፣ ምቹ ሶፋዎች እና ምርጥ የPS5 ጌሞችን ያካተተ ነው።";
+            }
+
+            if (textLower.includes('ውድድር') || textLower.includes('tournament') || textLower.includes('ሻምፒዮን')) {
+                return "🏆 <b>ENpalabra የ PS5 ውድድር፡</b><br>በቅርቡ ሐምሌ 15 የሚጀመረው ታላቅ የ EA Sports FC (FIFA) ውድድር ለመመዝገብ 'መመዝገብ እፈልጋለሁ' ብለው ይጻፉ። አሸናፊዎች ከፍተኛ ሽልማት ያገኛሉ!";
+            }
+
+            if (textLower.includes('ጨዋታ') || textLower.includes('football') || textLower.includes('match') || textLower.includes('ቀጣይ')) {
+                return "⚽ <b>የዛሬ ታላላቅ ግጥሚያዎች፡</b><br>በDStv ዛሬ ማታ 4:00 PM Chelsea vs Arsenal በደመቀ ሁኔታ ይተላለፋል። ወንበር ለመያዝ 'ወንበር ማስያዝ እፈልጋለሁ' ብለው ይንገሩኝ።";
+            }
+
+            if (textLower.includes('ሰላም') || textLower.includes('hello') || textLower.includes('hi')) {
+                return "ሰላም! እንዴት ልርዳዎት? ስለ ውድድር ለማወቅ 'ውድድር'፣ ዋጋዎችን ለማወቅ 'ዋጋ'፣ ወይም ለመመዝገብ 'መመዝገብ እፈልጋለሁ' ብለው መጻፍ ይችላሉ።";
+            }
+
+            // Default fallback response offering detailed choices
+            return "ይቅርታ መልእክትዎ አልገባኝም። ስለ ENpalabra የሚከተሉትን መረጃዎች መጠየቅ ይችላሉ፡<br>1. ስለ መዝናኛ ማዕከላችን ታሪክ (ለመጠየቅ 'ድርጅት' ይበሉ)<br>2. ስለ መግቢያና ጨዋታ ዋጋዎች (ለመጠየቅ 'ዋጋ' ይበሉ)<br>3. በቀጥታ ፎርም ሳይሞሉ ለመመዝገብ 'መመዝገብ እፈልጋለሁ' ብለው ይጻፉልኝ።";
+        }
+
+        // Live Dynamic Cost Calculator Logic
+        function calculateTotal() {
+            const persons = parseInt(document.getElementById('slide-persons').value);
+            const games = parseInt(document.getElementById('slide-games').value);
+            const mins = parseInt(document.getElementById('slide-mins').value);
+
+            // Update range labels
+            document.getElementById('val-persons').innerText = persons;
+            document.getElementById('val-games').innerText = games;
+            document.getElementById('val-mins').innerText = `${mins} mins`;
+
+            // Rate Calculations:
+            // DStv Matches = 15 Birr per match per person
+            const dstvCost = persons * games * 15;
+            
+            // PS5 Arcade = 10 Birr per 10 minutes per person (1 Birr per minute)
+            const arcadeCost = persons * mins * 1.0;
+
+            const total = dstvCost + arcadeCost;
+
+            // Update breakdown display
+            document.getElementById('breakdown-persons').innerText = `${persons} ሰው`;
+            document.getElementById('breakdown-dstv').innerText = `${dstvCost} Birr`;
+            document.getElementById('breakdown-arcade').innerText = `${arcadeCost} Birr`;
+
+            // Audio tick indicator during slider move
+            playBeep(220 + (total * 0.8), "sine", "32n");
+
+            // Animate total counter display smoothly
+            animateValue('total-price-display', total);
+        }
+
+        // Smooth Counter Animator for pricing feel
+        function animateValue(id, newValue) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            
+            let current = parseInt(el.textContent) || 0;
+            if (current === newValue) {
+                el.innerHTML = `${newValue} <span class="text-base text-slate-400 font-normal tracking-wide ml-2">BIRR</span>`;
+                return;
+            }
+            
+            let step = Math.ceil(Math.abs(newValue - current) / 10) || 1;
+            if (current < newValue) {
+                current = Math.min(current + step, newValue);
+            } else {
+                current = Math.max(current - step, newValue);
+            }
+            
+            el.innerHTML = `${current} <span class="text-base text-slate-400 font-normal tracking-wide ml-2">BIRR</span>`;
+            if (current !== newValue) {
+                setTimeout(() => animateValue(id, newValue), 20);
+            }
+        }
+
+        // Help transition interactive buttons to booking state
+        function bookLoungeSeat(itemName) {
+            playBeep(650, "square", "8n");
+            const dstvBotInput = document.getElementById('dstv-chat-input');
+            dstvBotInput.value = `ወንበር ማስያዝ እፈልጋለሁ ለ ${itemName}`;
+            scrollToAISection('dstv');
+            sendChatMessage('dstv');
+        }
+
+        function bookCalculatedQuote() {
+            playBeep(680, "square", "6n");
+            const persons = document.getElementById('slide-persons').value;
+            const games = document.getElementById('slide-games').value;
+            const mins = document.getElementById('slide-mins').value;
+            const totalPrice = document.getElementById('total-price-display').innerText.split(' ')[0];
+
+            const psBotInput = document.getElementById('ps-chat-input');
+            psBotInput.value = `ቦታ ማስያዝ እፈልጋለሁ ለ ${persons} ሰው ፣ ${games} የእግር ኳስ ጨዋታ እና ${mins} ደቂቃ ጌም`;
+            scrollToAISection('ps');
+            sendChatMessage('ps');
+        }
+
+        function scrollToAISection(type) {
+            document.getElementById('ai-booking').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById(`${type}-chat-input`).focus();
+            }, 800);
+        }
+
+        // Initialize values on load
+        window.onload = function() {
+            calculateTotal();
+        };
+    </script>
+</body>
+</html>
